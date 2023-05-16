@@ -1,0 +1,159 @@
+--validate table creation of AFRANIO employee 
+CREATE TABLE TB_FUNCIONARIOS_AFRANIO 
+(
+MATRICULA VARCHAR2 (4),
+NOME VARCHAR2 (100),
+CARGO VARCHAR2 (50),
+PROJETO VARCHAR2 (50),
+ENDERECO VARCHAR2 (150),
+BAIRRO VARCHAR2 (50),
+CIDADE VARCHAR2 (50),
+ESTADO VARCHAR2 (2),
+IDADE INTEGER
+);
+
+--validate insert data AFRANIO employee table 
+INSERT INTO TB_FUNCIONARIOS_AFRANIO 
+    (MATRICULA, NOME, CARGO, PROJETO, ENDERECO, BAIRRO, CIDADE, ESTADO, IDADE)
+    VALUES
+    ('3988', 'Afranio Soares Vargas', 'AUXILIAR TÉCNICO', 'Project news', 'RUA DA MATA, 175', 
+    'CENTRO', 'GRAMADO', 'RS', '4');   
+INSERT INTO TB_FUNCIONARIOS_AFRANIO
+    (MATRICULA, NOME, CARGO, PROJETO, ENDERECO, BAIRRO, CIDADE, ESTADO, IDADE)
+    VALUES
+    ('2186', 'Lusiane Alberto da Vila', 'Scrum Master', 'Best employers', 'Beco da Chácara, 80', 
+    'Granja', 'São Leopoldo', 'RS', '18');    
+INSERT INTO TB_FUNCIONARIOS_AFRANIO
+    (MATRICULA, NOME, CARGO, PROJETO, ENDERECO, BAIRRO, CIDADE, ESTADO, IDADE)
+    VALUES
+    ('2312', 'Elisabeta Portes do Sal', 'Analista Senior', 'Best employers', 'Aguás do Mar, 20', 
+    'Três corações', 'Torres', 'RS', '22');
+
+--validate query all records of AFRANIO employee table
+SELECT * FROM TB_FUNCIONARIOS_AFRANIO; 
+
+--validate query registered jobs of AFRANIO employee table
+SELECT CARGO FROM TB_FUNCIONARIOS_AFRANIO; 
+
+--validate query registered names, projects and age of AFRANIO employee table
+SELECT NOME, PROJETO, IDADE FROM TB_FUNCIONARIOS_AFRANIO_; 
+   
+UPDATE TB_FUNCIONARIOS_AFRANIO SET IDADE = '44' WHERE MATRICULA = '3988';
+
+DELETE FROM TB_FUNCIONARIOS_AFRANIO WHERE MATRICULA = '2186';
+
+DELETE FROM TB_FUNCIONARIOS_AFRANIO WHERE NOME = 'Lusiane Alberto da Vila';
+
+--validate table creation of professional experience of AFRANIO employee
+CREATE TABLE TB_EXP_PROF_FUNC_AFRANIO 
+(
+NOME VARCHAR2 (100),
+EMPRESA1 VARCHAR2 (100),
+EMPRESA2 VARCHAR2 (100),
+EMPRESA3 VARCHAR2 (100),
+ANOS_EXPERIENCIA INTEGER
+);
+
+--validate insert data professional experience of AFRANIO employee table
+INSERT INTO TB_EXP_PROF_FUNC_AFRANIO 
+    (MATRICULA, NOME, EMPRESA1, EMPRESA2, EMPRESA3, ANOS_EXPERIENCIA)
+    VALUES
+    ('3988','Afranio Soares Vargas', 'Instituto de Pesquisas SAX', 'HP', 'Positivo', '2');   
+
+INSERT INTO TB_EXP_PROF_FUNC_AFRANIO
+    (MATRICULA, NOME, ACTUAL_COMPANY, PENULTIMATE_COMPANY, ANTEPENULTIMATE_COMPANY, YEARS_EXPERIENCE)
+    VALUES
+    ('2186','Lusiane Alberto da Vila', 'Instituto de Pesquisas SAX', 'DB Server', 'Microsoft', '13');  
+INSERT INTO TB_EXP_PROF_FUNC_AFRANIO
+    (MATRICULA, NOME, ACTUAL_COMPANY, PENULTIMATE_COMPANY, ANTEPENULTIMATE_COMPANY, YEARS_EXPERIENCE)
+    VALUES
+    ('2312','Elisabeta Portes do Sal', 'Instituto de Pesquisas SAX', 'DB SERVER', 'HP', '20');
+    
+--validate query all professional experiences of AFRANIO employees table
+SELECT * FROM TB_EXP_PROF_FUNC_AFRANIO; 
+    
+UPDATE TB_EXP_PROF_FUNC_AFRANIO SET CARGO = 'Auxiliar Técnico', PROJETO = 'Project news', 
+ENDERECO = 'Rua do Pinheiro, 85 Casa1', BAIRRO = 'Morro Azul', CIDADE = 'Harmonia' WHERE MATRICULA = '3988';
+
+UPDATE TB_EXP_PROF_FUNC_AFRANIO SET EMPRESA2 = 'DB Server' WHERE MATRICULA = '2312';
+
+--Validate a query selection of TB_FUNCIONARIOS_AFRANIO and TB_EXP_PROF_FUNC_AFRANIO tables
+SELECT DISTINCT 
+TF.MATRICULA AS MATRICULA_DO_FUNCIONÁRIO,
+TF.NOME AS NOME_DO_FUNCIONÁRIO,
+TE.YEARS_EXPERIENCE AS "EXPERIENCIA TOTAL"
+FROM
+TB_FUNCIONARIOS_AFRANIO TF
+INNER JOIN
+TB_EXP_PROF_FUNC_AFRANIO TE
+ON TF.MATRICULA = TE.MATRICULA;
+
+--validate query count professional experiences of AFRANIO employees table
+SELECT count(*) matricula FROM TB_EXP_PROF_FUNC_AFRANIO; 
+
+--validate query full professional experiences of AFRANIO employees table
+SELECT NOME, YEARS_EXPERIENCE FROM TB_EXP_PROF_FUNC_AFRANIO; 
+
+SELECT DISTINCT --Validate a query enrollment, name and years of experience of TB_FUNCIONARIOS_AFRANIO and TB_EXP_PROF_FUNC_AFRANIO tables
+TF.MATRICULA AS MATRICULA_DO_FUNCIONÁRIO,
+TF.NOME AS NOME_DO_FUNCIONÁRIO,
+TE.YEARS_EXPERIENCE AS "EXPERIENCIA TOTAL" 
+FROM
+TB_FUNCIONARIOS_AFRANIO TF
+INNER JOIN
+TB_EXP_PROF_FUNC_AFRANIO TE
+ON TF.MATRICULA = TE.MATRICULA;
+
+ --Validate a query for specific employee names of AFRANIO employees table
+SELECT * FROM TB_FUNCIONARIOS_AFRANIO WHERE NOME IN(
+'Lusiane Alberto da Vila',
+'Elisabeta Portes do Sal',
+'Afranio Soares Vargas');
+
+--validate query registered names registered and updated of AFRANIO employee table
+SELECT * FROM TB_FUNCIONARIOS_AFRANIO WHERE NOME IN( 
+SELECT DISTINCT NOME FROM TB_EXP_PROF_FUNC_AFRANIO); 
+
+--validate creation Adress Old Companies AFRANIO employee table
+(CREATE TABLE TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO 
+MATRICULA VARCHAR2 (4),
+NOME VARCHAR2 (100),
+ADRESS_ACTUAL_COMPANY VARCHAR2 (150),
+ADRESS_PENULTIMATE_COMPANY VARCHAR2 (150),
+ADRESS_ANTEPENULTIMATE_COMPANY VARCHAR2 (150)
+);
+
+--validate query all records TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO table
+SELECT * FROM TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO; 
+
+--validate insert data Adress Old Companies AFRANIO employee table
+INSERT INTO TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO 
+    (MATRICULA, NOME, ADRESS_ACTUAL_COMPANY, ADRESS_PENULTIMATE_COMPANY, ADRESS_ANTEPENULTIMATE_COMPANY)
+    VALUES
+    ('3988','Afranio Soares Vargas','Av. Ipiranga, 6681 - Prédio 90A, Sala 1301 - Parque Científico e Tecnológico da PUCRS, Porto Alegre - RS, 90619-900', 
+    'TecnoPUC Prédio 91B, Av. Ipiranga, 6681 - 90619-900 - Partenon, Porto Alegre - RS', 'R. João Bettega, 5200 - Cidade Industrial de Curitiba, Curitiba - PR, 81350-000');  
+INSERT INTO TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO
+    (MATRICULA, NOME, ADRESS_ACTUAL_COMPANY, ADRESS_PENULTIMATE_COMPANY, ADRESS_ANTEPENULTIMATE_COMPANY)
+    VALUES
+    ('2186','Lusiane Alberto da Vila','Av. Ipiranga, 6681 - Prédio 90A, Sala 1301 - Parque Científico e Tecnológico da PUCRS, Porto Alegre - RS, 90619-900', 
+    'Av. Ipiranga, 6681 - TECNOPUC - Prédio 99A, 5º Andar - Partenon, Porto Alegre - RS, 90619-900', 
+    'Avenida Presidente Juscelino Kubitscheck, 1909 Torre Sul, 16° andar - Vila Nova Conceição, São Paulo - SP, 04543-907');   
+INSERT INTO TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO
+    (MATRICULA, NOME, ADRESS_ACTUAL_COMPANY, ADRESS_PENULTIMATE_COMPANY, ADRESS_ANTEPENULTIMATE_COMPANY)
+    VALUES
+    ('2312','Elisabeta Portes do Sal', 'Av. Ipiranga, 6681 - TECNOPUC - Prédio 90A, 5º Andar - Partenon, Porto Alegre - RS, 90619-900',
+    'TecnoPUC Prédio 91B, Av. Ipiranga, 6681 - 90619-900 - Partenon, Porto Alegre - RS');
+    
+UPDATE TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO SET ADRESS_ACTUAL_COMPANY = 'Av. Ipiranga, 6681 - Prédio 90A, Sala 1301 - Parque Científico e Tecnológico da PUCRS, Porto Alegre - RS, 90619-900'
+ WHERE MATRICULA = '2312';
+ 
+ --Validate a query enrollment, name and adress of experience of TB_FUNCIONARIOS_AFRANIO and TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO tables
+SELECT 
+TF.MATRICULA AS MATRICULA,
+TF.NOME AS NOME,
+TA.ADRESS_ACTUAL_COMPANY AS ENDEREÇO_DA_ATUAL_EMPRESA 
+FROM
+TB_FUNCIONARIOS_AFRANIO TF
+INNER JOIN
+TB_ADRESS_OLD_COMPANIES_FUNCIONARIOS_AFRANIO TA
+ON TF.MATRICULA = TA.MATRICULA;
